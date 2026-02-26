@@ -80,6 +80,7 @@
    </div>
 </footer>
 <?php wp_footer(); ?>
+<script src="<?php echo get_template_directory_uri(); ?>/js/theme-mode.js?v=2.0"></script>
 <script src="https://kit.fontawesome.com/da499b4b05.js" crossorigin="anonymous"></script>
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>

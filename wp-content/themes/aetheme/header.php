@@ -5,9 +5,36 @@
       <meta charset="UTF-8">
 	  <meta name="zen-verification" content="aDxtCHrdcqAzbNqVHBHto8WHtAMOCvJZt4aHH8hrbZLFrCgxzIP7jf9rRLwXL4wV" /> 
       <title><?php echo wp_get_document_title(); ?></title>
+      <script>
+         (function () {
+            var storageKey = 'ae-theme-mode';
+            var mode = 'system';
+            var active = 'light';
+            try {
+               var saved = window.localStorage ? localStorage.getItem(storageKey) : null;
+               if (saved === 'light' || saved === 'dark' || saved === 'system') {
+                  mode = saved;
+               }
+            } catch (e) {}
+            if (mode === 'dark') {
+               active = 'dark';
+            } else if (mode === 'system') {
+               try {
+                  active = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+               } catch (e) {
+                  active = 'light';
+               }
+            }
+            var root = document.documentElement;
+            root.setAttribute('data-ae-theme-mode', mode);
+            root.setAttribute('data-ae-theme-active', active);
+            root.style.colorScheme = active;
+         })();
+      </script>
       <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/style.css?v=1.20">
       <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/web.css?v=1.20">
       <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/mobile.css?v=1.20">
+      <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/theme-mode.css?v=2.0">
       <?php wp_head(); ?>
    </head>
    <body>
@@ -15,6 +42,9 @@
          <div class="c">
             <div id="hl">
                <div><a href="/"><img src="<?php echo get_template_directory_uri(); ?>/img/logo B.svg" alt="Логотип AEclinic"></a>
+                  <button type="button" id="ae-theme-toggle" aria-label="Theme mode" title="Theme: system">
+                     <span class="ae-theme-toggle__icon" aria-hidden="true">SYS</span>
+                  </button>
                </div>
                <div>
                   <div class="phone_class">+7(473) 202-17-17</div>
