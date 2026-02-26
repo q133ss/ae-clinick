@@ -58,8 +58,10 @@
                 setup_postdata($post);            
                 $thumb_id = get_post_thumbnail_id();
                 $thumb_url = wp_get_attachment_image_src($thumb_id, 'full', true);
+                $icon1 = trim((string) get_post_meta($post->ID, 'icon1', true));
+                $icon_attr = $icon1 !== '' ? ' data-bg="' . esc_url($icon1) . '"' : '';
                 ?>
-         <div style="background-image: url(<?php echo get_post_meta($post->ID, 'icon1', true); ?>);"><?php the_title(); ?></div>
+         <div<?php echo $icon_attr; ?>><?php the_title(); ?></div>
          <?php }
             wp_reset_postdata(); ?>
       </div>
@@ -261,7 +263,7 @@
             </div>
             <div id="op">
                <p>Пожалуйста наберите нам на номер
-                  <mark><i class="fa fa-phone"></i> + 7 473 202 17 17</mark>
+                  <mark><span aria-hidden="true">&#9742;</span> + 7 473 202 17 17</mark>
                   если хотите
                   связаться по срочному вопросу. Мы проконсультируем вас и ответим на все инетересующие вас
                   вопросы.
