@@ -1,0 +1,1 @@
+<div class="zg"><h2><?php echo block_field('title'); ?></h2></div>

@@ -1,0 +1,69 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: aecosmet-web
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    environment:
+      TZ: "${TZ:-Europe/Moscow}"
+      APACHE_DOCUMENT_ROOT: /var/www/html
+      PHP_MEMORY_LIMIT: "${PHP_MEMORY_LIMIT:-1024M}"
+      PHP_UPLOAD_MAX_FILESIZE: "${PHP_UPLOAD_MAX_FILESIZE:-1024M}"
+      PHP_POST_MAX_SIZE: "${PHP_POST_MAX_SIZE:-1280M}"
+      PHP_MAX_EXECUTION_TIME: "${PHP_MAX_EXECUTION_TIME:-600}"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/zz-local.ini:ro
+      - ./docker/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf:ro
+      - ./docker/apache/security.conf:/etc/apache2/conf-enabled/security-local.conf:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1/ >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  db:
+    image: mariadb:10.11
+    container_name: aecosmet-db
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_allowed_packet=256M
+    environment:
+      TZ: "${TZ:-Europe/Moscow}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE:-wordpress}"
+      MYSQL_USER: "${MYSQL_USER:-wordpress}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-wordpress}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-root}"
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 25s
+
+  adminer:
+    image: adminer:4
+    container_name: aecosmet-adminer
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${ADMINER_PORT:-8081}:8080"
+    environment:
+      TZ: "${TZ:-Europe/Moscow}"
+
+volumes:
+  db_data:
