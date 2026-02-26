@@ -97,6 +97,21 @@
 
 <script>
    lazyload();
+       function aeNormalizeSlickDotsAria($slider) {
+           var $buttons;
+           var total;
+           if (!$slider || !$slider.length) {
+               return;
+           }
+           $buttons = $slider.find('.slick-dots li button');
+           total = $buttons.length;
+           if (!total) {
+               return;
+           }
+           $buttons.each(function (index) {
+               this.setAttribute('aria-label', (index + 1) + ' of ' + total);
+           });
+       }
        $('#ifacts').slick({
            slidesToShow: 1,
            slidesToScroll: 1,
@@ -112,7 +127,11 @@
                // $('header nav').css('top', $("header").height());
            });
        });
-       $('#uslide').slick({
+       $('#uslide')
+       .on('init reInit setPosition', function () {
+           aeNormalizeSlickDotsAria($(this));
+       })
+       .slick({
            lazyLoad: 'ondemand',
            slidesToShow: 3,
            slidesToScroll: 1,

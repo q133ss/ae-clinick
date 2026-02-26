@@ -34,8 +34,8 @@
       <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/style.css?v=1.20">
       <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/web.css?v=1.20">
       <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/mobile.css?v=1.20">
-      <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/theme-mode.css?v=2.0">
       <?php wp_head(); ?>
+      <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/theme-mode.css?v=2.1">
    </head>
    <body>
       <header>

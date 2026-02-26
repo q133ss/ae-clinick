@@ -532,6 +532,8 @@ nav ul li a {
 
 #uslide .slick-dots li.slick-active button:before,
 #uslide .slick-dots li button:before {
+	content: "\2022" !important;
+	font-family: Arial, sans-serif !important;
 	color: #e0bd60;
 	font-size: 10px;
 }
