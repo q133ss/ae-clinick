@@ -221,6 +221,33 @@
         }
     }
 
+    var aeAosInitialized = false;
+
+    function aeRefreshAos(hard) {
+        if (!window.AOS) {
+            return;
+        }
+        if (hard && typeof window.AOS.refreshHard === 'function') {
+            window.AOS.refreshHard();
+            return;
+        }
+        if (typeof window.AOS.refresh === 'function') {
+            window.AOS.refresh();
+        }
+    }
+
+    function aeInitAosSafe() {
+        if (!window.AOS || typeof window.AOS.init !== 'function') {
+            return;
+        }
+        if (!aeAosInitialized) {
+            window.AOS.init({ disable: 'mobile' });
+            aeAosInitialized = true;
+        } else {
+            aeRefreshAos(true);
+        }
+    }
+
     function aeLoadThirdParty() {
         (function (d, w, c) {
             (w[c] = w[c] || []).push(function () {
@@ -288,9 +315,15 @@
 
         if (typeof window.lazyload === 'function') {
             window.lazyload();
+            window.setTimeout(function () {
+                aeRefreshAos(true);
+            }, 200);
         }
 
         aeApplyDeferredUlistIcons();
+        window.setTimeout(function () {
+            aeRefreshAos(true);
+        }, 350);
 
         aeInitSlickWhenVisible('#ifacts', function ($slider) {
             if ($slider.hasClass('slick-initialized')) {
@@ -304,6 +337,7 @@
                 autoplay: true,
                 autoplaySpeed: 10000
             });
+            aeRefreshAos(true);
         });
 
         aeInitSlickWhenVisible('#uslide', function ($slider) {
@@ -312,6 +346,7 @@
             }
             $slider.on('init reInit setPosition', function () {
                 aeNormalizeSlickDotsAria($(this));
+                aeRefreshAos(true);
             }).slick({
                 lazyLoad: 'ondemand',
                 slidesToShow: 3,
@@ -323,6 +358,7 @@
                 dots: true,
                 easing: 'easeOutElastic'
             });
+            aeRefreshAos(true);
         });
 
         $('#menuico').on('click', function () {
@@ -437,9 +473,26 @@
             });
         });
 
-        if (window.AOS && typeof window.AOS.init === 'function') {
-            window.AOS.init({ disable: 'mobile' });
+        aeInitAosSafe();
+        window.setTimeout(function () {
+            aeRefreshAos(true);
+        }, 0);
+        window.setTimeout(function () {
+            aeRefreshAos(true);
+        }, 900);
+        window.addEventListener('load', function () {
+            aeRefreshAos(true);
+        });
+        if (document.fonts && document.fonts.ready && typeof document.fonts.ready.then === 'function') {
+            document.fonts.ready.then(function () {
+                aeRefreshAos(true);
+            });
         }
+        document.addEventListener('visibilitychange', function () {
+            if (!document.hidden) {
+                aeRefreshAos(true);
+            }
+        });
         if ($.fn && $.fn.datepicker) {
             $('.datep').datepicker();
         }
