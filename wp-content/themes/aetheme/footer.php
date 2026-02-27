@@ -80,7 +80,7 @@
    </div>
 </footer>
 <?php wp_footer(); ?>
-<script src="<?php echo get_template_directory_uri(); ?>/js/theme-mode.js?v=2.0"></script>
+<!-- <script src="<?php echo get_template_directory_uri(); ?>/js/theme-mode.js?v=2.0"></script> -->
 <script src="<?php echo get_template_directory_uri(); ?>/vendor/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/wp-content/themes/aetheme/plug/slick/slick.min.js"></script>
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.fancybox.min.js"></script>

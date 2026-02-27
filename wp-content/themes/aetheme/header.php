@@ -7,25 +7,9 @@
       <title><?php echo wp_get_document_title(); ?></title>
       <script>
          (function () {
-            var storageKey = 'ae-theme-mode';
-            var mode = 'system';
-            var active = 'light';
-            try {
-               var saved = window.localStorage ? localStorage.getItem(storageKey) : null;
-               if (saved === 'light' || saved === 'dark' || saved === 'system') {
-                  mode = saved;
-               }
-            } catch (e) {}
-            if (mode === 'dark') {
-               active = 'dark';
-            } else if (mode === 'system') {
-               try {
-                  active = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-               } catch (e) {
-                  active = 'light';
-               }
-            }
             var root = document.documentElement;
+            var mode = 'light';
+            var active = 'light';
             root.setAttribute('data-ae-theme-mode', mode);
             root.setAttribute('data-ae-theme-active', active);
             root.style.colorScheme = active;
@@ -42,9 +26,11 @@
          <div class="c">
             <div id="hl">
                <div><a href="/"><img src="<?php echo get_template_directory_uri(); ?>/img/logo B.svg" alt="Логотип AEclinic"></a>
+                  <!--
                   <button type="button" id="ae-theme-toggle" aria-label="Theme mode" title="Theme: system">
                      <span class="ae-theme-toggle__icon" aria-hidden="true">SYS</span>
                   </button>
+                  -->
                </div>
                <div>
                   <div class="phone_class">+7(473) 202-17-17</div>
