@@ -87,9 +87,7 @@
 <script src="<?php echo get_template_directory_uri(); ?>/vendor/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/vendor/jquery-validation/additional-methods.min.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/vendor/jquery-lazyload/lazyload.min.js"></script>
-<script src="<?php echo get_template_directory_uri(); ?>/vendor/jquery-ui/jquery-ui.min.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/vendor/aos/aos.js"></script>
-<script src="<?php echo get_template_directory_uri(); ?>/vendor/jquery-timepicker/jquery.timepicker.min.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.mask.min.js"></script>
 <script>
 (function (window, document) {
@@ -493,18 +491,8 @@
                 aeRefreshAos(true);
             }
         });
-        if ($.fn && $.fn.datepicker) {
-            $('.datep').datepicker();
-        }
         if ($.fn && $.fn.slick && $('#sng').length && !$('#sng').hasClass('slick-initialized')) {
             $('#sng').slick();
-        }
-        if ($.fn && $.fn.timepicker) {
-            $('.timep').timepicker({
-                timeFormat: 'H:mm',
-                minTime: '9:00',
-                maxTime: '20:30'
-            });
         }
 
         if (window.aeAfterLoadIdle) {
@@ -516,8 +504,6 @@
 })(window, document, window.jQuery);
 </script>
 <div id="menuico" class="mi"></div>
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/vendor/jquery-timepicker/jquery.timepicker.min.css">
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/vendor/jquery-ui/jquery-ui.min.css">
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/vendor/aos/aos.css"/>
 <link rel="stylesheet" type="text/css" href="/wp-content/themes/aetheme/plug/slick/slick.css?v=1.1"/>
 <link rel="stylesheet" type="text/css" href="/wp-content/themes/aetheme/plug/slick/slick-theme.css?v=1.1"/>
